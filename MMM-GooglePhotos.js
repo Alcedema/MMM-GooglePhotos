@@ -19,6 +19,7 @@ Module.register("MMM-GooglePhotos", {
       maxWHRatio: null,
       // WHRatio = Width/Height ratio ( ==1 : Squared Photo,   < 1 : Portraited Photo, > 1 : Landscaped Photo)
     },
+    startHidden: false,
     showWidth: 1080, // These values will be used for quality of downloaded photos to show. real size to show in your MagicMirror region is recommended.
     showHeight: 1920,
     timeFormat: "YYYY/MM/DD HH:mm",
@@ -67,6 +68,11 @@ Module.register("MMM-GooglePhotos", {
   },
 
   notificationReceived: function(noti, payload, sender) {
+  	if (noti === "MODULE_DOM_CREATED") {
+            if (this.config.startHidden) {
+                this.hide();
+            } 
+  	}
     if (noti == "GPHOTO_NEXT") {
       this.updatePhotos()
     }
